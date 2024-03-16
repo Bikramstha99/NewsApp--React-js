@@ -61,17 +61,37 @@ export class News extends Component {
     console.log('Hello i am a constructor');
     this.state= {
       articles:this.articles,
-      loading:false
-    } 
+      loading:false,
+      page:1,
+    }  
   } 
-  
   async componentDidMount(){
-    let url='https://newsapi.org/v2/everything?q=apple&from=2024-03-15&to=2024-03-15&sortBy=popularity&apiKey=b979937f6ea34306b6a1b95cb7d1e7fe';
+    let url=`https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=b979937f6ea34306b6a1b95cb7d1e7fe&page=1&pageSize=20`;
     let data= await fetch(url);
     let parseData= await data.json();
     console.log(parseData);
-    this.setState({ articles: parseData.articles });
+    this.setState({ articles: parseData.articles , totalResults:parseData.totalResults });
   }
+
+  handleNextClick=async()=>{
+    if(this.state.page+1>Math.ceil(this.state.totalResults /20)){
+    }
+    else{
+    let url=`https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=b979937f6ea34306b6a1b95cb7d1e7fe&page=${this.state.page + 1}&pageSize=20`;
+    let data= await fetch(url);
+    let parseData= await data.json();
+    console.log(parseData);
+    this.setState({ articles: parseData.articles,page:this.state.page+1});
+    }
+  }
+  handlePreviousClick=async()=>{
+    let url=`https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=b979937f6ea34306b6a1b95cb7d1e7fe&page=${this.state.page - 1}&pageSize=20`;
+    let data= await fetch(url);
+    let parseData= await data.json();
+    console.log(parseData);
+    this.setState({ articles: parseData.articles,page:this.state.page-1});
+  }
+  
   render() {
     return (
       <div>
@@ -83,6 +103,10 @@ export class News extends Component {
               <NewsItem title={element.title?element.title.slice(0,45):"" } description={element.description?element.description.slice(0,88):""} imageUrl={element.urlToImage?element.urlToImage:"https://cdn.vox-cdn.com/thumbor/5hOIBDCuxlh1MnIDzu_CsObw1h4=/0x0:3000x2000/1200x628/filters:focal(1500x1000:1501x1001)/cdn.vox-cdn.com/uploads/chorus_asset/file/25331615/VST_0311_Site_Post.jpg"} newsUrl={element.url}></NewsItem>
               </div>
             })}
+            </div>
+            <div className="container mt-2 d-flex justify-content-between ">
+              <button disabled={this.page<=1} type='button' className='btn btn-dark me-2' onClick={this.handlePreviousClick}>&larr; Previous</button>
+              <button type='button' className='btn btn-dark' onClick={this.handleNextClick}>Next &rarr;</button>
             </div>
       </div>
      </div>
