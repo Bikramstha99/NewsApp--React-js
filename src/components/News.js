@@ -64,8 +64,15 @@ export class News extends Component {
       loading:false
     } 
   } 
+  
+  async componentDidMount(){
+    let url='https://newsapi.org/v2/everything?q=apple&from=2024-03-15&to=2024-03-15&sortBy=popularity&apiKey=b979937f6ea34306b6a1b95cb7d1e7fe';
+    let data= await fetch(url);
+    let parseData= await data.json();
+    console.log(parseData);
+    this.setState({ articles: parseData.articles });
+  }
   render() {
-    
     return (
       <div>
         <div className='container'>
@@ -73,7 +80,7 @@ export class News extends Component {
             <div className="row">
             {this.state.articles.map((element)=>{
               return <div  className='col-md-4' key={element.url}>
-              <NewsItem title={element.title.slice(0,45) } description={element.description.slice(0,88)} imageUrl={element.urlToImage} newsUrl={element.url}></NewsItem>
+              <NewsItem title={element.title?element.title.slice(0,45):"" } description={element.description?element.description.slice(0,88):""} imageUrl={element.urlToImage?element.urlToImage:"https://cdn.vox-cdn.com/thumbor/5hOIBDCuxlh1MnIDzu_CsObw1h4=/0x0:3000x2000/1200x628/filters:focal(1500x1000:1501x1001)/cdn.vox-cdn.com/uploads/chorus_asset/file/25331615/VST_0311_Site_Post.jpg"} newsUrl={element.url}></NewsItem>
               </div>
             })}
             </div>
