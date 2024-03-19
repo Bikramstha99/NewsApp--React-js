@@ -4,7 +4,7 @@ export class NewsItem extends Component {
  
   render() {
    
-    let {title,description,imageUrl,newsUrl}=this.props;
+    let {title,description,imageUrl,newsUrl,author, date}=this.props;
     return (
       <div>
           <div className="card" style={{ width: '18rem' }}>
@@ -12,6 +12,7 @@ export class NewsItem extends Component {
             <div className="card-body">
                 <h5 className="card-title">Top news {title}...</h5>
             <p className="card-text">{description}</p>
+            <p className="card-text"><small className='text-muted'>by {!author?"Unknown":author} on {new Date(date).toDateString()}</small></p>
             <a href={newsUrl} className="btn btn-primary">Read More</a>
         </div>
      </div>
