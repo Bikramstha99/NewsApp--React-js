@@ -70,14 +70,15 @@ export class News extends Component {
       "content": "A medical team at Cromwell Hospital in London strapped on the $3,500 Apple Vision Pro during two spinal surgeries. Doctors are calling the device a game-changing tool, beefing up Apples claims that t… [+2071 chars]"
       },
   ]
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     console.log('Hello i am a constructor');
     this.state= {
       articles:this.articles,
       loading:false,
       page:1,
     }  
+    document.title=`${this.props.category}-News`;
   } 
   
 
