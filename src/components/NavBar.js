@@ -4,12 +4,7 @@ import {
   Link
 } from "react-router-dom";
 
-export class NavBar extends Component {
-  static propTypes = {
-
-  }
-
-  render() {
+const NavBar=()=>{
     return (
       <div>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,11 +29,9 @@ export class NavBar extends Component {
       </ul>
     </div>
   </div>
-</nav>
-        
+</nav>      
       </div>
-    )
-  }
+    ) 
 }
 
 export default NavBar
